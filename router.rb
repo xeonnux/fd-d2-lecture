@@ -20,11 +20,11 @@ class Router
           # if username && password is rider -> access to rider menu
           route_rider_action
         end
-      # option to logout
-      # print_menu
-      # choice = gets.chomp.to_i
-      # print `clear`
-      # route_action(choice)
+        # option to logout
+        # print_menu
+        # choice = gets.chomp.to_i
+        # print `clear`
+        # route_action(choice)
       end
     end
   end
@@ -57,10 +57,14 @@ class Router
     rider_action(choice)
   end
 
-  def print_manager_menu
+  def print_menu_header
     puts "--------------------"
     puts "------- MENU -------"
     puts "--------------------"
+  end
+
+  def print_manager_menu
+    print_menu_header
     puts "1. Add new meal"
     puts "2. List all meals"
     puts "3. Add new customer"
@@ -73,15 +77,11 @@ class Router
   end
 
   def print_rider_menu
-    puts "--------------------"
-    puts "------- MENU -------"
-    puts "--------------------"
-    puts "1. Add new meal"
-    puts "2. List all meals"
-    puts "3. Add new customer"
-    puts "4. List all customers"
-    puts "5. Log out"
-    puts "6. Exit"
+    print_menu_header
+    puts "1. List my undelivered orders"
+    puts "2. Mark order as delivered"
+    puts "3. Logout"
+    puts "4. Exit"
     print "> "
   end
 
@@ -91,23 +91,20 @@ class Router
     when 2 then @meals_controller.list
     when 3 then @customers_controller.add
     when 4 then @customers_controller.list
-    when 5 then puts "TODO"
-    when 6 then puts "TODO"
+    when 5 then @orders_controller.add
+    when 6 then @orders_controller.list_undelivered_orders
     when 7 then logout!
     when 8 then stop!
     else puts "Try again..."
     end
   end
 
-  
   def rider_action(choice)
     case choice
-    when 1 then @meals_controller.add
-    when 2 then @meals_controller.list
-    when 3 then @customers_controller.add
-    when 4 then @customers_controller.list
-    when 5 then logout!
-    when 6 then stop!
+    when 1 then @orders_controller.list_my_orders(@current_user)
+    when 2 then @orders_controller.mark_as_delivered(@current_user)
+    when 3 then logout!
+    when 4 then stop!
     else puts "Try again..."
     end
   end

@@ -4,8 +4,9 @@ require_relative '../models/customer'
 class CustomersController
   def initialize(customer_repository)
     @customers_view = CustomersView.new
-    @customer_repository  = customer_repository
+    @customer_repository = customer_repository
   end
+
   def add
     name = @customers_view.ask_user_for(:name)
     address = @customers_view.ask_user_for(:address)
